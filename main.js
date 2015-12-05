@@ -1,3 +1,5 @@
+// var MESSAGES = require("./messages.JSON");
+
 var gameState = {
     turns: 14,
     distance: 0, // must exceed 5 to discover cabin
