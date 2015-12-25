@@ -1,20 +1,20 @@
-{
+export default const MESSAGES = {
     "start": [
         "You are lost in the woods.",
         "It is snowing and you are cold.",
         "In 14 turns you will die of exposure."
     ],
     "scenarios": {
-        "standard": "The snow continues to fall.",
-        "wind": "You feel the wind begin to rise.",
-        "wolf": [
+        "standard": ["The snow continues to fall."],
+        "wind": ["You feel the wind begin to rise."],
+        "wolf": [ //Deal with wolf later. Intention to create an indexed response based on weakness
             "You hear the nearby howl of a wolf.",
             "To your left, some distance away, you see the dark silhouette of a wolf",
             "The wolf is walking carefully on a path to intercept you.",
             "The wolf emits a deep growl and breaks into a run.",
             "The wolf is gaining on you!",
         ],
-        "cabin": "Looking ahead, you detect the faint outlines of a cabin."
+        "cabin": ["Looking ahead, you detect the faint outlines of a cabin."]
     },
     "results": {
         "wait": {
@@ -23,12 +23,12 @@
                 "Nothing.",
                 "Standing still allows the cold to creep deeper into your bones."
             ],
-            "repeat": "You continue to wait, becoming colder every second",
-            "wind": "As the wind picks up you seek shelter next to a large tree.",
-            "wolf": "The wolf stands still and looks right at you."
+            "repeat": ["You continue to wait, becoming colder every second"],
+            "wind": ["As the wind picks up you seek shelter next to a large tree."],
+            "wolf": ["The wolf stands still and looks right at you."]
         },
-        "walk": "You step through the snow, the effort warms you slightly.",
-        "run": "You pick up your feet and begin to run.",
+        "walk": ["You step through the snow, the effort warms you slightly."],
+        "run": ["You pick up your feet and begin to run."],
         "yell": {
             "standard": [
                 "You shout into the woods for help.",
@@ -38,8 +38,7 @@
             "wind": [
                 "You raise your voice as the wind rises.",
                 "The cold air overcomes your words and steals your breath.",
-                "After a moment you regain yourself,",
-                "you have never felt this cold."
+                "You have never felt this cold."
             ],
             "wolf": {
                 "initial": [
@@ -56,6 +55,7 @@
                     "he continues to charge without breaking stride."
                 ]
             }
-        }
+        },
+        "end": ["...You have died."]
     }
 }

@@ -1,7 +1,9 @@
-// var MESSAGES = require("./messages.JSON");
+import MESSAGES from "./messages.js";
 
 var gameState = {
     turns: 14,
+    resultText: MESSAGES.start,
+    scenarioText: [""],
     distance: 0, // must exceed 5 to discover cabin
     weakness: 0,
     wait: 0,
@@ -38,28 +40,24 @@ var gameState = {
                 // error
                 break;
         }
+        if (gameState.turns <= 0) {
+            gameState.resultText = MESSAGES.results.end;
+        }
     }
 }
 
 function draw(choice) {
     var canvas = document.getElementById("viewport");
     var ctx = canvas.getContext("2d");
-    var text = "";
 
-    if (!choice) {
-        text = "You are lost in the woods.";
-    } else {
+    if (choice) {
         gameState.advance(choice);
-        text = "You decide to " + choice + ". (" + gameState.turns + ")";
-    }
-    if (gameState.turns <= 0) {
-        text = "You have died..";
     }
 
     ctx.clearRect(0, 0, 800, 450);
     ctx.font = "24px sans-serif";
     ctx.textAlign = "center";
-    ctx.fillText(text, canvas.width/2, canvas.height/2);
+    ctx.fillText(gameState.resultText, canvas.width/2, canvas.height/2);
 }
 
 function wait() {
