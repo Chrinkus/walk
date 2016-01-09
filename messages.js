@@ -1,4 +1,5 @@
-export default const MESSAGES = {
+//export default const MESSAGES = {
+var MESSAGES = {
     "start": [
         "You are lost in the woods.",
         "It is snowing and you are cold.",
@@ -51,7 +52,7 @@ export default const MESSAGES = {
                     "Slowly, he walks off and disappears back into the woods."
                 ],
                 "charge": [
-                    "You yell at the wolf as loud and as fierce as you can,"
+                    "You yell at the wolf as loud and as fierce as you can,",
                     "he continues to charge without breaking stride."
                 ]
             }
