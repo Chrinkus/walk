@@ -22,7 +22,7 @@ var MESSAGES = {
             "normal": ["You look around through the trees hoping for.. something."],
             "repeat": ["Standing still allows the cold to creep deeper into your bones."],
             "wind": ["As the wind picks up you seek shelter next to a large tree."],
-            "wolf": ["The wolf stands still and looks right at you."]
+            "wolf": ["The wolf stops, sniffs the ground, and looks right through you."]
         },
         "walk": ["You step through the snow, the effort warms you slightly."],
         "run": ["You pick up your feet and begin to run."],

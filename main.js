@@ -16,21 +16,27 @@ var gameState = {
 
         // Results
         switch (choice) {
-            case "wait": // best use: seeks shelter during wind
+            case "wait":
+                // Inaction - the longer you wait, the more exposure you take
+                // Best use: seeks shelter during wind
+                // Worst use: consecutively
+                // Wolf: weakness +2
+                // turnCost is 1 + previous waits + 1 if wind
                 if (this.wind) {
-                    // wind: turns -1
                     turnCost += 1;
                     this.resultText.push(MESSAGES.results.wait.wind);
                 } else {
                     this.resultText.push(MESSAGES.results.wait.normal);
                 }
-                // normal: exposure reduces turns by increasing values for consecutive non-waits
                 this.wait += 1;
                 turnCost += this.wait;
                 if (this.wait > 1) {
                     this.resultText.push(MESSAGES.results.wait.repeat);
                 }
-                // wolf: weakness +1
+                if (this.wolf) {
+                    this.weakness += 2;
+                    this.resultText.push(MESSAGES.results.wait.wolf);
+                }
                 break;
             case "walk": // best use: non-wind filler, distance + 1
                 this.wait = 0;      // Breaks wait streak
@@ -65,6 +71,9 @@ var gameState = {
             gameState.resultText = MESSAGES.results.end;
         }
         // Scenarios
+        // 5% chance * distance for wolf to proc
+        // 30% chance every turn for wind to proc
+        // Cabin procs at distance > 5 && turns < 5
     }
 }
 
