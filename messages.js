@@ -19,12 +19,8 @@ var MESSAGES = {
     },
     "results": {
         "wait": {
-            "standard": [
-                "You look around through the trees hoping for.. something.",
-                "Nothing.",
-                "Standing still allows the cold to creep deeper into your bones."
-            ],
-            "repeat": ["You continue to wait, becoming colder every second"],
+            "normal": ["You look around through the trees hoping for.. something."],
+            "repeat": ["Standing still allows the cold to creep deeper into your bones."],
             "wind": ["As the wind picks up you seek shelter next to a large tree."],
             "wolf": ["The wolf stands still and looks right at you."]
         },
