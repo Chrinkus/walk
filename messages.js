@@ -24,7 +24,11 @@ var MESSAGES = {
             "wind": ["As the wind picks up you seek shelter next to a large tree."],
             "wolf": ["The wolf stops, sniffs the ground, and looks right through you."]
         },
-        "walk": ["You step through the snow, the effort warms you slightly."],
+        "walk": {
+            "normal": ["You step through the snow, the effort warms you slightly."],
+            "wind": ["As you walk, the wind bites into you."],
+            "wolf": ["You keep your eyes forward and try to ignore the beast."]
+        },
         "run": ["You pick up your feet and begin to run."],
         "yell": {
             "standard": [

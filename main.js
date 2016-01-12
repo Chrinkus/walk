@@ -11,8 +11,8 @@ var gameState = {
     wolf: false,
     advance: function(choice) {
         var turnCost = 0;           // Reduce # of 'this.turns -= 1' calls
-        this.resultText = [""];     // Reset array for pushes
-        this.scenarioText = [""];   // Reset array for pushes
+        this.resultText = [];     // Reset array for pushes
+        this.scenarioText = [];   // Reset array for pushes
 
         // Results
         switch (choice) {
@@ -22,13 +22,14 @@ var gameState = {
                 // Worst use: consecutively
                 // Wolf: weakness +2
                 // turnCost is 1 + previous waits + 1 if wind
+                this.wait += 1;
                 if (this.wind) {
                     turnCost += 1;
                     this.resultText.push(MESSAGES.results.wait.wind);
+                    this.wind = false;
                 } else {
                     this.resultText.push(MESSAGES.results.wait.normal);
                 }
-                this.wait += 1;
                 turnCost += this.wait;
                 if (this.wait > 1) {
                     this.resultText.push(MESSAGES.results.wait.repeat);
@@ -38,13 +39,25 @@ var gameState = {
                     this.resultText.push(MESSAGES.results.wait.wolf);
                 }
                 break;
-            case "walk": // best use: non-wind filler, distance + 1
+            case "walk":
+                // Non-wind filler, turns -1, distance +1
+                // Best use: none, usually better than waiting
+                // Worst use: during wind, turns -2
+                // Wolf: weakness +1
                 this.wait = 0;      // Breaks wait streak
-                // normal: turns -1
-                // wolf: weakness +1
-                // wind: turns -2
-                this.resultText = MESSAGES.results.walk;
-                this.turns -= 1;
+                this.distance += 1;
+                if (this.wind) {
+                    turnCost -= 2;
+                    this.resultText.push(MESSAGES.results.walk.wind);
+                    this.wind = false;
+                } else {
+                    turnCost -= 1;
+                    this.resultText.push(MESSAGES.results.walk.normal);
+                }
+                if (this.wolf) {
+                    this.weakness += 1;
+                    this.resultText.push(MESSAGES.results.walk.wolf);
+                }
                 break;
             case "run": // best use: distance +2, prolong life during wolf charge
                 this.wait = 0;      // Breaks wait streak
