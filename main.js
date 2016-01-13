@@ -6,6 +6,8 @@ var gameState = {
     scenarioText: MESSAGES.start,
     distance: 0,                    // must exceed 5 to discover cabin
     weakness: 0,                    // at 5 weakness wolf charges
+    adrenaline: false,              // run w/o fatigue
+    fatigue: false,                 // forced wait next turn
     wait: 0,                        // No cap on wait at this time
     wind: false,
     wolf: false,
@@ -47,11 +49,11 @@ var gameState = {
                 this.wait = 0;      // Breaks wait streak
                 this.distance += 1;
                 if (this.wind) {
-                    turnCost -= 2;
+                    turnCost += 2;
                     this.resultText.push(MESSAGES.results.walk.wind);
                     this.wind = false;
                 } else {
-                    turnCost -= 1;
+                    turnCost += 1;
                     this.resultText.push(MESSAGES.results.walk.normal);
                 }
                 if (this.wolf) {
@@ -59,21 +61,49 @@ var gameState = {
                     this.resultText.push(MESSAGES.results.walk.wolf);
                 }
                 break;
-            case "run": // best use: distance +2, prolong life during wolf charge
+            case "run":
+                // Big distance move, no turnCost, distance +2, causes fatigue*
+                // Best use: during wolf charge to prolong life
+                // Worst use: during wind, turns -1, with wolf phase1: weakness +3
                 this.wait = 0;      // Breaks wait streak
-                // normal: no turn loss, causes fatigue state - forced wait next turn
-                // wolf: weakness +2, no turn loss, no fatigue
-                //wind: exposure -1
-                this.resultText = MESSAGES.results.run;
-                this.turns -= 0;
+                this.distance += 2;
+                this.fatigue = true;
+                this.resultText.push(MESSAGES.results.run.normal); // need
+                if (this.wind) {
+                    turnCost += 1;
+                    this.resultText.push(MESSAGES.results.run.wind); // need
+                }
+                if (this.wolf) {
+                    if (this.adrenaline) {
+                        this.fatigue = false;
+                        this.resultText.push(MESSAGES.results.run.wolfCharge); // need
+                    } else {
+                        this.weakness += 3;
+                        this.resultText.push(MESSAGES.results.run.wolf); // need
+                    }
+                }
                 break;
             case "yell": // best use: reduces weakness
-                // yell code - potential to fall-through from wait?
-                // normal: exposure -wait level (does not increase wait level)
-                // wolf: weakness -1
-                // wind: wait exposure -1
-                this.resultText = MESSAGES.results.yell.standard;
-                this.turns -= 2;
+                // Similar to wait, has effect on wolf phase 1
+                // Best use: during phase 1 wolf, weakness -1
+                // Worst use: during wind, turnCost +1, no weakness reduction
+                // Does not reset or increase wait streak
+                if (this.wind) {
+                    turnCost += 2;
+                    if (this.wolf) {
+                        this.resultText.push(MESSAGES.results.yell.wolfWind); // need
+                    } else {
+                        this.resultText.push(MESSAGES.results.yell.wind); // need
+                    }
+                } else {
+                    turnCost += 1;
+                    if (this.wolf) {
+                        this.weakness -= 1;
+                        this.resultText.push(MESSAGES.results.yell.wolf); // need
+                    } else {
+                        this.resultText.push(MESSAGES.results.yell.normal); // need
+                    }
+                }
                 break;
             default:
                 // error
