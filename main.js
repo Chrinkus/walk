@@ -110,12 +110,30 @@ var gameState = {
                 break;
         }
         this.turns -= turnCost;     // One this.turns reduction
+        if (this.wind) { this.wind = false; } // turn wind off
         if (gameState.turns <= 0) {
             gameState.resultText = MESSAGES.results.end;
         }
+        
         // Scenarios
+        var roll = Math.floor(Math.random() * 10); // 0-9
+
         // 5% chance * distance for wolf to proc
+        if (!this.wolf) {
+            this.wolf = roll < (this.distance * 0.5) ? true : false;
+        }
+        if (this.wolf) {
+            this.scenarioText.push(MESSAGES.scenarios.wolf[this.weakness]);
+        }
+
         // 30% chance every turn for wind to proc
+        if (roll < 3) {
+            this.wind = true;       // Turn wind on
+            this.scenarioText.push(MESSAGES.scenarios.wind);
+        } else {
+            this.scenarioText.push(MESSAGES.scenarios.normal);
+        }
+
         // Cabin procs at distance > 5 && turns < 5
     }
 }

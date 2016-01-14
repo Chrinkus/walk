@@ -6,7 +6,7 @@ var MESSAGES = {
         "In 14 turns you will die of exposure."
     ],
     "scenarios": {
-        "standard": ["The snow continues to fall."],
+        "normal": ["The snow continues to fall."],
         "wind": ["You feel the wind begin to rise."],
         "wolf": [ //Deal with wolf later. Intention to create an indexed response based on weakness
             "You hear the nearby howl of a wolf.",
@@ -31,7 +31,7 @@ var MESSAGES = {
         },
         "run": ["You pick up your feet and begin to run."],
         "yell": {
-            "standard": [
+            "normal": [
                 "You shout into the woods for help.",
                 "Silently you hold your breath and listen..",
                 "There is no response."
