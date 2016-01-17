@@ -111,19 +111,19 @@ var gameState = {
         }
         this.turns -= turnCost;     // One this.turns reduction
         if (this.wind) { this.wind = false; } // turn wind off
-        if (gameState.turns <= 0) {
+        if (gameState.turns < 1) {
             gameState.resultText = MESSAGES.results.end;
+            return;
         }
-        
+
         // Scenarios
         var roll = Math.floor(Math.random() * 10); // 0-9
 
         // 5% chance * distance for wolf to proc
-        if (!this.wolf) {
-            this.wolf = roll < (this.distance * 0.5) ? true : false;
-        }
         if (this.wolf) {
             this.scenarioText.push(MESSAGES.scenarios.wolf[this.weakness]);
+        } else {
+            this.wolf = roll < (this.distance * 0.5) ? true : false;
         }
 
         // 30% chance every turn for wind to proc

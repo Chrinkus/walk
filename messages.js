@@ -6,8 +6,8 @@ var MESSAGES = {
         "In 14 turns you will die of exposure."
     ],
     "scenarios": {
-        "normal": ["The snow continues to fall."],
-        "wind": ["You feel the wind begin to rise."],
+        "normal": "The snow continues to fall.",
+        "wind": "You feel the wind begin to rise.",
         "wolf": [ //Deal with wolf later. Intention to create an indexed response based on weakness
             "You hear the nearby howl of a wolf.",
             "To your left, some distance away, you see the dark silhouette of a wolf",
@@ -15,32 +15,24 @@ var MESSAGES = {
             "The wolf emits a deep growl and breaks into a run.",
             "The wolf is gaining on you!",
         ],
-        "cabin": ["Looking ahead, you detect the faint outlines of a cabin."]
+        "cabin": "Looking ahead, you detect the faint outlines of a cabin."
     },
     "results": {
         "wait": {
-            "normal": ["You look around through the trees hoping for.. something."],
-            "repeat": ["Standing still allows the cold to creep deeper into your bones."],
-            "wind": ["As the wind picks up you seek shelter next to a large tree."],
-            "wolf": ["The wolf stops, sniffs the ground, and looks right through you."]
+            "normal": "You look around through the trees hoping for.. something.",
+            "repeat": "Standing still allows the cold to creep deeper into your bones.",
+            "wind": "As the wind picks up you seek shelter next to a large tree.",
+            "wolf": "The wolf stops, sniffs the ground, and looks right through you."
         },
         "walk": {
-            "normal": ["You step through the snow, the effort warms you slightly."],
-            "wind": ["As you walk, the wind bites into you."],
-            "wolf": ["You keep your eyes forward and try to ignore the beast."]
+            "normal": "You step through the snow, the effort warms you slightly.",
+            "wind": "As you walk, the wind bites into you.",
+            "wolf": "You keep your eyes forward and try to ignore the beast."
         },
-        "run": ["You pick up your feet and begin to run."],
+        "run": "You pick up your feet and begin to run.",
         "yell": {
-            "normal": [
-                "You shout into the woods for help.",
-                "Silently you hold your breath and listen..",
-                "There is no response."
-            ],
-            "wind": [
-                "You raise your voice as the wind rises.",
-                "The cold air overcomes your words and steals your breath.",
-                "You have never felt this cold."
-            ],
+            "normal": "You shout into the woods for help.",
+            "wind": "The cold air overcomes your words and steals your breath.",
             "wolf": {
                 "initial": [
                     "The wolf stops and stares at you,",
