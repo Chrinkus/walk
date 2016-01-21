@@ -11,10 +11,12 @@ var gameState = {
     wait: 0,                        // No cap on wait at this time
     wind: false,
     wolf: false,
+    cabin: false,
+    win: 0,                         // must equal 3 to win
     advance: function(choice) {
         var turnCost = 0;           // Reduce # of 'this.turns -= 1' calls
-        this.resultText = [];     // Reset array for pushes
-        this.scenarioText = [];   // Reset array for pushes
+        this.resultText = [];       // Reset array for pushes
+        this.scenarioText = [];     // Reset array for pushes
 
         // Results
         switch (choice) {
@@ -111,19 +113,27 @@ var gameState = {
         }
         this.turns -= turnCost;     // One this.turns reduction
         if (this.wind) { this.wind = false; } // turn wind off
-        if (gameState.turns < 1) {
-            gameState.resultText = MESSAGES.results.end;
+
+        // Endings
+        if (this.turns < 1) {
+            this.resultText = MESSAGES.results.end.dead; // need
+            status();
             return;
+        } else if (this.win > 2) {
+            this.resultText = MESSAGES.results.end.win; //need
+        } else if (this.weakness > 10) {
+            this.resultText = MESSAGES.results.end.wolf; //need
         }
 
         // Scenarios
         var roll = Math.floor(Math.random() * 10); // 0-9
 
         // 5% chance * distance for wolf to proc
+        if (!this.wolf) {
+            this.wolf = roll < (this.distance * 0.5) ? true : false;
+        }
         if (this.wolf) {
             this.scenarioText.push(MESSAGES.scenarios.wolf[this.weakness]);
-        } else {
-            this.wolf = roll < (this.distance * 0.5) ? true : false;
         }
 
         // 30% chance every turn for wind to proc
@@ -135,6 +145,26 @@ var gameState = {
         }
 
         // Cabin procs at distance > 5 && turns < 5
+        if (!this.cabin) {
+            if (this.distance > 5 && this.turns < 5) {
+                this.cabin = true;
+                this.scenarioText.push(MESSAGES.scenarios.cabin); // need
+            }
+        } else {
+            this.scenarioText.push(MESSAGES.scenarios.cabin[this.win]);
+            switch (choice) {
+                case "walk":
+                    this.win += 1;
+                    break;
+                case "run":
+                    this.win += 2;
+                    break;
+                default:
+                    // error
+                    break;
+            }
+        }
+        status();
     }
 }
 
@@ -175,4 +205,15 @@ function run() {
 }
 function yell() {
     return draw("yell");
+}
+
+// Testing
+function status() {
+    console.log(
+        "Turns: " + gameState.turns + "\n" +
+        "Distance: " + gameState.distance + "\n" +
+        "Weakness: " + gameState.weakness + "\n" +
+        "Wait: " + gameState.wait + "\n" +
+        "Wolf: " + gameState.wolf
+    );
 }
