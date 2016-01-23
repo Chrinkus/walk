@@ -197,19 +197,6 @@ function draw(choice) {
     });
 }
 
-function wait() {
-    return draw("wait");
-}
-function walk() {
-    return draw("walk");
-}
-function run() {
-    return draw("run");
-}
-function yell() {
-    return draw("yell");
-}
-
 // Testing
 function status() {
     console.log(
