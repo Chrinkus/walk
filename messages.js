@@ -15,7 +15,11 @@ var MESSAGES = {
             "The wolf emits a deep growl and breaks into a run.",
             "The wolf is gaining on you!",
         ],
-        "cabin": "Looking ahead, you detect the faint outlines of a cabin."
+        "cabin": [
+            "Looking ahead, you spot the silhouette of a... cabin?",
+            "You head towards what is definitely a small cabin.",
+            "As you near the structure, you allow yourself to hope. You reach for the door..",
+        ]
     },
     "results": {
         "wait": {
@@ -29,26 +33,34 @@ var MESSAGES = {
             "wind": "As you walk, the wind bites into you.",
             "wolf": "You keep your eyes forward and try to ignore the beast."
         },
-        "run": "You pick up your feet and begin to run.",
+        "run": {
+            "normal": "You pick up your feet and begin to run.",
+            "wind": "As you run, the wind slashes at your skin.",
+            "wolf": "You run. Your sudden flight intrigues the predator.",
+            "wolfCharge": "You're running for your life and dare not look back!"
+        },
         "yell": {
             "normal": "You shout into the woods for help.",
             "wind": "The cold air overcomes your words and steals your breath.",
-            "wolf": {
-                "initial": [
-                    "The wolf stops and stares at you,",
-                    "its ears raised and pointed directly at you."
-                ],
-                "attn": [
-                    "The wolf lowers its head to sniff the ground.",
-                    "It then raises its head and looks off in another direction.",
-                    "Slowly, he walks off and disappears back into the woods."
-                ],
-                "charge": [
-                    "You yell at the wolf as loud and as fierce as you can,",
-                    "he continues to charge without breaking stride."
-                ]
-            }
+            "wolf": "You curse loudly at the beast! His recoil encourages you.",
+            "wolfWind": "The wind rises and steals your words. Your defiant posture warns the wolf."
         },
-        "end": ["...You have died."]
+        "end": {
+            "dead": ["...You have died."],
+            "win": [
+                "You burst into the cabin, locking the door behind.",
+                "In the room you spot a hearth.",
+                "Stepping quickly but quietly you cross to the mantle.",
+                "A box of matches.",
+                "You set about making a fire. You are safe for now."
+            ],
+            "wolf": [
+                "For a moment the predator's footfalls cease,",
+                "You consider turning to look before the weight of the beast lands full on you.",
+                "As its jaw burrows through your coat towards your neck you smile,",
+                "For this animal that will end your life has given you one last gift:",
+                "Warmth, and then death."
+            ]
+        }
     }
 }

@@ -39,7 +39,7 @@ var gameState = {
                     this.resultText.push(MESSAGES.results.wait.repeat);
                 }
                 if (this.wolf) {
-                    this.weakness += 2;
+                    this.weakness += 1;
                     this.resultText.push(MESSAGES.results.wait.wolf);
                 }
                 break;
@@ -59,7 +59,7 @@ var gameState = {
                     this.resultText.push(MESSAGES.results.walk.normal);
                 }
                 if (this.wolf) {
-                    this.weakness += 1;
+                    this.weakness += 0.5;
                     this.resultText.push(MESSAGES.results.walk.wolf);
                 }
                 break;
@@ -70,18 +70,18 @@ var gameState = {
                 this.wait = 0;      // Breaks wait streak
                 this.distance += 2;
                 this.fatigue = true;
-                this.resultText.push(MESSAGES.results.run.normal); // need
+                this.resultText.push(MESSAGES.results.run.normal);
                 if (this.wind) {
                     turnCost += 1;
-                    this.resultText.push(MESSAGES.results.run.wind); // need
+                    this.resultText.push(MESSAGES.results.run.wind);
                 }
                 if (this.wolf) {
                     if (this.adrenaline) {
                         this.fatigue = false;
-                        this.resultText.push(MESSAGES.results.run.wolfCharge); // need
+                        this.resultText.push(MESSAGES.results.run.wolfCharge);
                     } else {
-                        this.weakness += 3;
-                        this.resultText.push(MESSAGES.results.run.wolf); // need
+                        this.weakness += 1.5;
+                        this.resultText.push(MESSAGES.results.run.wolf);
                     }
                 }
                 break;
@@ -93,17 +93,17 @@ var gameState = {
                 if (this.wind) {
                     turnCost += 2;
                     if (this.wolf) {
-                        this.resultText.push(MESSAGES.results.yell.wolfWind); // need
+                        this.resultText.push(MESSAGES.results.yell.wolfWind);
                     } else {
-                        this.resultText.push(MESSAGES.results.yell.wind); // need
+                        this.resultText.push(MESSAGES.results.yell.wind);
                     }
                 } else {
                     turnCost += 1;
                     if (this.wolf) {
                         this.weakness -= 1;
-                        this.resultText.push(MESSAGES.results.yell.wolf); // need
+                        this.resultText.push(MESSAGES.results.yell.wolf);
                     } else {
-                        this.resultText.push(MESSAGES.results.yell.normal); // need
+                        this.resultText.push(MESSAGES.results.yell.normal);
                     }
                 }
                 break;
@@ -116,13 +116,15 @@ var gameState = {
 
         // Endings
         if (this.turns < 1) {
-            this.resultText = MESSAGES.results.end.dead; // need
+            this.resultText = MESSAGES.results.end.dead;
             status();
             return;
         } else if (this.win > 2) {
-            this.resultText = MESSAGES.results.end.win; //need
+            this.resultText = MESSAGES.results.end.win;
+            return;
         } else if (this.weakness > 10) {
-            this.resultText = MESSAGES.results.end.wolf; //need
+            this.resultText = MESSAGES.results.end.wolf;
+            return;
         }
 
         // Scenarios
@@ -133,7 +135,8 @@ var gameState = {
             this.wolf = roll < (this.distance * 0.5) ? true : false;
         }
         if (this.wolf) {
-            this.scenarioText.push(MESSAGES.scenarios.wolf[this.weakness]);
+            this.adrenaline = true;
+            this.scenarioText.push(MESSAGES.scenarios.wolf[Math.floor(this.weakness)]);
         }
 
         // 30% chance every turn for wind to proc
@@ -146,9 +149,9 @@ var gameState = {
 
         // Cabin procs at distance > 5 && turns < 5
         if (!this.cabin) {
-            if (this.distance > 5 && this.turns < 5) {
+            if (this.distance > 4 && this.turns < 5) {
                 this.cabin = true;
-                this.scenarioText.push(MESSAGES.scenarios.cabin); // need
+                this.scenarioText.push(MESSAGES.scenarios.cabin[this.win]);
             }
         } else {
             this.scenarioText.push(MESSAGES.scenarios.cabin[this.win]);
