@@ -25,8 +25,11 @@ var gameState = {
                     return flatten(entry);
                 }
             });
+        }
+        flatten(arr);
+
         return newArr;
-    }
+    },
 
     advance: function(choice) {
         var turnCost = 0;           // Reduce # of 'this.turns -= 1' calls
@@ -182,8 +185,8 @@ var gameState = {
                     break;
             }
         }
-        loader(this.resultText);
-        loader(this.scenarioText);
+        this.resultText = this.loader(this.resultText);
+        this.scenarioText = this.loader(this.scenarioText);
         status();
     }
 }
