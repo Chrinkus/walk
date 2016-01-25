@@ -13,6 +13,21 @@ var gameState = {
     wolf: false,
     cabin: false,
     win: 0,                         // must equal 3 to win
+
+    loader: function(arr) {
+        var newArr = [];
+
+        function flatten(arr) {
+            arr.forEach(function(entry) {
+                if (typeof entry === "string") {
+                    newArr.push(entry);
+                } else {
+                    return flatten(entry);
+                }
+            });
+        return newArr;
+    }
+
     advance: function(choice) {
         var turnCost = 0;           // Reduce # of 'this.turns -= 1' calls
         this.resultText = [];       // Reset array for pushes
@@ -167,6 +182,8 @@ var gameState = {
                     break;
             }
         }
+        loader(this.resultText);
+        loader(this.scenarioText);
         status();
     }
 }
