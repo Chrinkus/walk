@@ -197,10 +197,19 @@ function draw(choice) {
     var fontSize = 24;
     ctx.font = fontSize + "px sans-serif";
 
+    // Initial colours
+    var lingrad = ctx.createLinearGradient(0, 0, 0, 450);
+    lingrad.addColorStop(0, "#1D4183");
+    lingrad.addColorStop(1, "#000000");
+
     if (choice) {
         gameState.advance(choice);
     }
     ctx.clearRect(0, 0, 800, 450);
+    // Initial colours
+    ctx.fillStyle = lingrad;
+    ctx.fillRect(0, 0, 800, 450);
+    ctx.fillStyle = "#FFF";
 
     // Upper-text - resultText
     ctx.textAlign = "left";
