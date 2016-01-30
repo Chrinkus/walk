@@ -191,9 +191,27 @@ var gameState = {
     }
 }
 
-function draw(choice) {
+function Flake(x) {
+    this.sprite = new Image();
+    this.sprite.src = "./snow_flake.png";
+    this.x = x;
+    this.y = -25;
+}
+var snow = [];
+
+function init() {
+    for (var i = 0; i < 50; i++) {
+        snow[i] = new Flake(Math.floor(Math.random() * 775)); // canvas.width - 25
+    }
+    window.requestAnimationFrame(draw);
+}
+
+function draw(timeStamp) {
+    window.requestAnimationFrame(draw);
+    
     var canvas = document.getElementById("viewport");
     var ctx = canvas.getContext("2d");
+    var timedRelease = timeStamp/1000;
     var fontSize = 24;
     ctx.font = fontSize + "px sans-serif";
 
@@ -202,9 +220,6 @@ function draw(choice) {
     lingrad.addColorStop(0, "#1D4183");
     lingrad.addColorStop(1, "#000000");
 
-    if (choice) {
-        gameState.advance(choice);
-    }
     ctx.clearRect(0, 0, 800, 450);
     // Initial colours
     ctx.fillStyle = lingrad;
@@ -223,6 +238,17 @@ function draw(choice) {
     ctx.textBaseline = "hanging";
     gameState.scenarioText.forEach(function(line, i) {
         ctx.fillText(line, (canvas.width - 25), (canvas.height / 2 + fontSize * 1.5 * i));
+    });
+
+    // Snowfall
+    snow.forEach(function(flake, index) {
+        if (index < timedRelease) {
+            flake.y += 1;
+            if (flake.y > 450) {
+                flake.y = -25;
+            }
+            ctx.drawImage(flake.sprite, flake.x, flake.y);
+        }
     });
 }
 
