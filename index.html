@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>A Walk in the Woods</title>
+    <link rel="stylesheet" href="stylesheet.css">
+    <script src="messages.js"></script>
+    <script src="main.js"></script>
+</head>
+<body onload="init();">
+    <header>
+        <h1>A Walk in the Woods</h1>
+        <p>An adventure game by Chris Schick</p>
+    </header>
+    <canvas id="viewport" width="800" height="450"></canvas>
+    <form id="action">
+        <input type="button" onclick="gameState.advance(&quot;wait&quot;);" value="Wait">
+        <input type="button" onclick="gameState.advance(&quot;walk&quot;);" value="Walk">
+        <input type="button" onclick="gameState.advance(&quot;run&quot;);" value="Run">
+        <input type="button" onclick="gameState.advance(&quot;yell&quot;);" value="Yell">
+    </form>
+</body>
+</html>

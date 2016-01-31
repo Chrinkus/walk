@@ -1,0 +1,19 @@
+body {
+    background-color: #445470;
+    color: #FFF;
+    text-align: center;
+    font-family: Helvetica, sans-serif;
+}
+canvas {
+    border: outset;
+}
+input {
+    border-radius: 10px;
+    border: 2px solid #041E4C;
+    background-color: #4365A3;
+    height: 50px;
+    width: 150px;
+    font-size: 25px;
+    font-weight: bold;
+    color: #FFF;
+}
