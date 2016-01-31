@@ -94,11 +94,11 @@ var gameState = {
                     this.resultText.push(MESSAGES.results.run.wind);
                 }
                 if (this.wolf) {
+                    this.weakness += 1.5;
                     if (this.adrenaline) {
                         this.fatigue = false;
                         this.resultText.push(MESSAGES.results.run.wolfCharge);
                     } else {
-                        this.weakness += 1.5;
                         this.resultText.push(MESSAGES.results.run.wolf);
                     }
                 }
@@ -133,15 +133,15 @@ var gameState = {
         if (this.wind) { this.wind = false; } // turn wind off
 
         // Endings
-        if (this.turns < 1) {
-            this.resultText = MESSAGES.results.end.dead;
-            status();
-            return;
-        } else if (this.win > 2) {
+        if (this.win > 2) {
             this.resultText = MESSAGES.results.end.win;
             return;
-        } else if (this.weakness > 10) {
+        } else if (this.weakness > 7) {
             this.resultText = MESSAGES.results.end.wolf;
+            return;
+        } else if (this.turns < 1) {
+            this.resultText = MESSAGES.results.end.dead;
+            status();
             return;
         }
 
@@ -153,8 +153,10 @@ var gameState = {
             this.wolf = roll < (this.distance * 0.5) ? true : false;
         }
         if (this.wolf) {
-            this.adrenaline = true;
-            this.scenarioText.push(MESSAGES.scenarios.wolf[Math.floor(this.weakness)]);
+            if (this.weakness > 3) {
+                this.adrenaline = true;
+            }
+            this.scenarioText.push(MESSAGES.scenarios.wolf[Math.ceil(this.weakness)]);
         }
 
         // 30% chance every turn for wind to proc
@@ -172,7 +174,6 @@ var gameState = {
                 this.scenarioText.push(MESSAGES.scenarios.cabin[this.win]);
             }
         } else {
-            this.scenarioText.push(MESSAGES.scenarios.cabin[this.win]);
             switch (choice) {
                 case "walk":
                     this.win += 1;
@@ -184,6 +185,7 @@ var gameState = {
                     // error
                     break;
             }
+            this.scenarioText.push(MESSAGES.scenarios.cabin[this.win]);
         }
         this.resultText = this.loader(this.resultText);
         this.scenarioText = this.loader(this.scenarioText);
@@ -197,7 +199,7 @@ function Flake(x) {
     this.x = x;
     this.y = -25;
 }
-var snow = [];
+var snow = []; // global variable - find a better solution
 
 function init() {
     for (var i = 0; i < 50; i++) {
@@ -208,7 +210,7 @@ function init() {
 
 function draw(timeStamp) {
     window.requestAnimationFrame(draw);
-    
+
     var canvas = document.getElementById("viewport");
     var ctx = canvas.getContext("2d");
     var timedRelease = timeStamp/1000;
@@ -259,6 +261,7 @@ function status() {
         "Distance: " + gameState.distance + "\n" +
         "Weakness: " + gameState.weakness + "\n" +
         "Wait: " + gameState.wait + "\n" +
-        "Wolf: " + gameState.wolf
+        "Wolf: " + gameState.wolf + "\n" +
+        "Win: " + gameState.win
     );
 }
