@@ -58,7 +58,13 @@ var MESSAGES = {
             ]
         },
         "end": {
-            "dead": ["...You have died."],
+            "dead": [
+                "Your feet refuse you, your momentum carries you forward.",
+                "Lying on the ground, the snow falling around you.",
+                "You try to pull your legs up to your chest.",
+                "There's no heat left to save.",
+                "The winter chill takes you.."
+            ],
             "win": [
                 "You burst into the cabin, locking the door behind.",
                 "In the room you spot a hearth.",

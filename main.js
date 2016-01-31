@@ -80,6 +80,7 @@ var gameState = {
                     this.weakness += 0.5;
                     this.resultText.push(MESSAGES.results.walk.wolf);
                 }
+                if (this.cabin) { this.win += 1; }
                 break;
             case "run":
                 // Big distance move, no turnCost, distance +2, causes fatigue*
@@ -102,6 +103,7 @@ var gameState = {
                         this.resultText.push(MESSAGES.results.run.wolf);
                     }
                 }
+                if (this.cabin) { this.win += 2; }
                 break;
             case "yell": // best use: reduces weakness
                 // Similar to wait, has effect on wolf phase 1
@@ -169,22 +171,11 @@ var gameState = {
 
         // Cabin procs at distance > 5 && turns < 5
         if (!this.cabin) {
-            if (this.distance > 4 && this.turns < 5) {
+            if ((this.distance > 4 && this.turns < 5) || this.distance > 10) {
                 this.cabin = true;
                 this.scenarioText.push(MESSAGES.scenarios.cabin[this.win]);
             }
         } else {
-            switch (choice) {
-                case "walk":
-                    this.win += 1;
-                    break;
-                case "run":
-                    this.win += 2;
-                    break;
-                default:
-                    // error
-                    break;
-            }
             this.scenarioText.push(MESSAGES.scenarios.cabin[this.win]);
         }
         this.resultText = this.loader(this.resultText);
