@@ -1,5 +1,5 @@
 body {
-    background-color: #445470;
+    background-color: #2572BD;
     color: #FFF;
     text-align: center;
     font-family: Helvetica, sans-serif;
@@ -10,10 +10,19 @@ canvas {
 input {
     border-radius: 10px;
     border: 2px solid #041E4C;
-    background-color: #4365A3;
+    /*background-color: #4365A3;*/
+    background-color: #48C;
     height: 50px;
     width: 150px;
     font-size: 25px;
     font-weight: bold;
     color: #FFF;
+}
+input:hover {
+    background-color: #0A56A0;
+}
+footer {
+    text-align: left;
+    position: absolute;
+    bottom: 25px;
 }

@@ -39,6 +39,7 @@ var MESSAGES = {
         },
         "walk": {
             "normal": "You step through the snow, the effort warms you slightly.",
+            "alternate": "You scan the woods ahead as you struggle through the snow.",
             "wind": "As you walk, the wind bites into you.",
             "wolf": "You keep your eyes forward and try to ignore the beast."
         },
