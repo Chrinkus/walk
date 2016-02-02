@@ -21,6 +21,18 @@ input {
 input:hover {
     background-color: #0A56A0;
 }
+input:disabled {
+    background-color: #BBB;
+}
+.special {
+    width: 615px;
+}
+#start {
+    display: none;
+}
+#reset {
+    display: none;
+}
 footer {
     text-align: left;
     position: absolute;

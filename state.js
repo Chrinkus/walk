@@ -34,8 +34,18 @@ var gameState = {
     advance: function(choice) {
         "use strict";
         var turnCost = 0;           // Reduce # of 'this.turns -= 1' calls
+        var buttons;
         this.resultText = [];       // Reset array for pushes
         this.scenarioText = [];     // Reset array for pushes
+
+        // Reset fatigue
+        if (this.fatigue) {
+            buttons = document.getElementsByClassName("fatigue");
+            Array.prototype.forEach.call(buttons, function(butt) {
+                butt.disabled = false;
+            });
+            this.fatigue = false;
+        }
 
         // Results
         switch (choice) {
@@ -136,9 +146,9 @@ var gameState = {
                 // error
                 break;
         }
-        this.turns -= turnCost;     // One this.turns reduction
-        if (this.wind) { this.wind = false; } // turn wind off
 
+        this.turns -= turnCost;     // One this.turns reduction
+        
         // Endings
         if (this.win > 2) {
             this.resultText = MESSAGES.results.end.win;
@@ -151,6 +161,15 @@ var gameState = {
             status();
             return;
         }
+        // Enable fatigue effects
+        if (this.fatigue) {
+            buttons = document.getElementsByClassName("fatigue");
+            Array.prototype.forEach.call(buttons, function(butt) {
+                butt.disabled = true;
+            });
+        }
+        // Reset wind
+        if (this.wind) { this.wind = false; } // turn wind off
 
         // Scenarios
         var roll = Math.floor(Math.random() * 10); // 0-9
