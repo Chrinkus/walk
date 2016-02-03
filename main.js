@@ -1,9 +1,10 @@
-function Flake(x) {
-    "use strict";
-    this.sprite = new Image();
-    this.sprite.src = "./snow_flake.png";
-    this.x = x;
-    this.y = -25;
+class Flake {
+    constructor(x) {
+        this.sprite = new Image();
+        this.sprite.src = "./snow_flake.png";
+        this.x = x;
+        this.y = -25;
+    }
 }
 
 function init() {
