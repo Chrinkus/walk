@@ -12,6 +12,7 @@ var gameState = {
     wolf: false,
     cabin: false,
     win: 0,                         // must equal 3 to win
+    gameOver: false,
 
     loader: function(arr) {
         "use strict";
@@ -29,6 +30,24 @@ var gameState = {
         flatten(arr);
 
         return newArr;
+    },
+
+    endings: function() {
+        // not complete or implemented yet
+        var buttons = document.getElementsByTagName("input");
+        Array.prototype.forEach.call(buttons, function(butt) {
+            butt.display = none;
+        });
+        var reset = document.getElementById("reset");
+        reset.display = inline;
+
+        if (this.win > 2) {
+            // Cabin win
+        } else if (this.weakness > 7) {
+            // Wolf lose
+        } else {
+            // Exposure lose
+        }
     },
 
     advance: function(choice) {
@@ -148,7 +167,7 @@ var gameState = {
         }
 
         this.turns -= turnCost;     // One this.turns reduction
-        
+
         // Endings
         if (this.win > 2) {
             this.resultText = MESSAGES.results.end.win;
@@ -158,7 +177,6 @@ var gameState = {
             return;
         } else if (this.turns < 1) {
             this.resultText = MESSAGES.results.end.dead;
-            status();
             return;
         }
         // Enable fatigue effects
@@ -204,7 +222,6 @@ var gameState = {
         }
         this.resultText = this.loader(this.resultText);
         this.scenarioText = this.loader(this.scenarioText);
-        status();
     }
 }
 
