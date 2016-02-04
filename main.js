@@ -31,8 +31,9 @@ function draw(timeStamp) {
     if (!gameState.gameOver) {
         // Initial colours
         var lingrad = ctx.createLinearGradient(0, 0, 0, 450);
+        var dynamicStop = gameState.turns / 14;
         lingrad.addColorStop(0, "#05A");
-        lingrad.addColorStop((gameState.turns / 14), "#000");
+        lingrad.addColorStop((gameState.turns >= 0 ? dynamicStop : 0), "#000");
         ctx.fillStyle = lingrad;
         ctx.fillRect(0, 0, 800, 450);
         ctx.fillStyle = "#FFF";
