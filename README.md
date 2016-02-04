@@ -7,6 +7,7 @@ It is snowing and you are cold.<br>
 In 14 turns you will die of exposure.
 </blockquote>
 This project is a vehicle for learning the techniques and tools necessary to produce a small game.<br>
+<a href="http://chrinkus.github.io/walk">Get lost in the snow here!</a>
 
 <h4>Initial goals are as follows:</h4>
 - Create an engine that takes input and returns output
