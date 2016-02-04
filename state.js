@@ -32,36 +32,18 @@ var gameState = {
         return newArr;
     },
 
-    endings: function() {
-        // not complete or implemented yet
-        var buttons = document.getElementsByTagName("input");
-        Array.prototype.forEach.call(buttons, function(butt) {
-            butt.display = none;
-        });
-        var reset = document.getElementById("reset");
-        reset.display = inline;
-        
-        if (this.win > 2) {
-            // Cabin win
-        } else if (this.weakness > 7) {
-            // Wolf lose
-        } else {
-            // Exposure lose
-        }
-    },
+    fatigueSwitch: function() {
+        "use strict";
+        // experimental solution to clean up code
+        // first switch fatigue depending on current state
+        this.fatigue = (this.fatigue ? false : true);
 
-	fatigueSwitch: function() {
-		"use strict";
-		// experimental solution to clean up code
-		// first switch fatigue depending on current state
-		this.fatigue = (this.fatigue ? false : true);
-
-		// then disable/enable buttons based on this call
+        // then disable/enable buttons based on this call
         var buttons = document.getElementsByClassName("fatigue");
-		Array.prototype.forEach.call(buttons, function(butt) {
-			butt.disabled = (gameState.fatigue ? true : false);
-		});
-	},
+        Array.prototype.forEach.call(buttons, function(butt) {
+            butt.disabled = (gameState.fatigue ? true : false);
+        });
+    },
 
     advance: function(choice) {
         "use strict";
@@ -69,16 +51,7 @@ var gameState = {
         var buttons;
         this.resultText = [];       // Reset array for pushes
         this.scenarioText = [];     // Reset array for pushes
-		if (this.fatigue) { this.fatigueSwitch(); }
-
-        /* Reset fatigue
-        if (this.fatigue) {
-            buttons = document.getElementsByClassName("fatigue");
-            Array.prototype.forEach.call(buttons, function(butt) {
-                butt.disabled = false;
-            });
-            this.fatigue = false;
-        }*/
+        if (this.fatigue) { this.fatigueSwitch(); }
 
         // Results
         switch (choice) {
@@ -136,8 +109,7 @@ var gameState = {
                 // Worst use: during wind, turns -1, with wolf phase1: weakness +3
                 this.wait = 0;      // Breaks wait streak
                 this.distance += 2;
-                // this.fatigue = true;
-				if (!this.adrenaline) { this.fatigueSwitch(); }
+                if (!this.adrenaline) { this.fatigueSwitch(); }
                 this.resultText.push(MESSAGES.results.run.normal);
                 if (this.wind) {
                     turnCost += 1;
@@ -193,13 +165,7 @@ var gameState = {
             this.resultText = MESSAGES.results.end.dead;
             return;
         }
-        /* Enable fatigue effects
-        if (this.fatigue) {
-            buttons = document.getElementsByClassName("fatigue");
-            Array.prototype.forEach.call(buttons, function(butt) {
-                butt.disabled = true;
-            });
-        }*/
+
         // Reset wind
         if (this.wind) { this.wind = false; } // turn wind off
 
