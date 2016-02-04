@@ -40,7 +40,7 @@ var gameState = {
         });
         var reset = document.getElementById("reset");
         reset.display = inline;
-
+        
         if (this.win > 2) {
             // Cabin win
         } else if (this.weakness > 7) {
@@ -50,21 +50,35 @@ var gameState = {
         }
     },
 
+	fatigueSwitch: function() {
+		"use strict";
+		// experimental solution to clean up code
+		// first switch fatigue depending on current state
+		this.fatigue = (this.fatigue ? false : true);
+
+		// then disable/enable buttons based on this call
+        var buttons = document.getElementsByClassName("fatigue");
+		Array.prototype.forEach.call(buttons, function(butt) {
+			butt.disabled = (gameState.fatigue ? true : false);
+		});
+	},
+
     advance: function(choice) {
         "use strict";
         var turnCost = 0;           // Reduce # of 'this.turns -= 1' calls
         var buttons;
         this.resultText = [];       // Reset array for pushes
         this.scenarioText = [];     // Reset array for pushes
+		if (this.fatigue) { this.fatigueSwitch(); }
 
-        // Reset fatigue
+        /* Reset fatigue
         if (this.fatigue) {
             buttons = document.getElementsByClassName("fatigue");
             Array.prototype.forEach.call(buttons, function(butt) {
                 butt.disabled = false;
             });
             this.fatigue = false;
-        }
+        }*/
 
         // Results
         switch (choice) {
@@ -122,7 +136,8 @@ var gameState = {
                 // Worst use: during wind, turns -1, with wolf phase1: weakness +3
                 this.wait = 0;      // Breaks wait streak
                 this.distance += 2;
-                this.fatigue = true;
+                // this.fatigue = true;
+				if (!this.adrenaline) { this.fatigueSwitch(); }
                 this.resultText.push(MESSAGES.results.run.normal);
                 if (this.wind) {
                     turnCost += 1;
@@ -131,7 +146,6 @@ var gameState = {
                 if (this.wolf) {
                     this.weakness += 1.5;
                     if (this.adrenaline) {
-                        this.fatigue = false;
                         this.resultText.push(MESSAGES.results.run.wolfCharge);
                     } else {
                         this.resultText.push(MESSAGES.results.run.wolf);
@@ -179,13 +193,13 @@ var gameState = {
             this.resultText = MESSAGES.results.end.dead;
             return;
         }
-        // Enable fatigue effects
+        /* Enable fatigue effects
         if (this.fatigue) {
             buttons = document.getElementsByClassName("fatigue");
             Array.prototype.forEach.call(buttons, function(butt) {
                 butt.disabled = true;
             });
-        }
+        }*/
         // Reset wind
         if (this.wind) { this.wind = false; } // turn wind off
 
@@ -222,6 +236,7 @@ var gameState = {
         }
         this.resultText = this.loader(this.resultText);
         this.scenarioText = this.loader(this.scenarioText);
+		status();
     }
 }
 
@@ -232,6 +247,8 @@ function status() {
         "Turns: " + gameState.turns + "\n" +
         "Distance: " + gameState.distance + "\n" +
         "Weakness: " + gameState.weakness + "\n" +
+		"Fatigue: " + gameState.fatigue + "\n" +
+		"Adrenaline: " + gameState.adrenaline + "\n" +
         "Wait: " + gameState.wait + "\n" +
         "Wolf: " + gameState.wolf + "\n" +
         "Win: " + gameState.win
