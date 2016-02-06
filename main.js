@@ -1,50 +1,78 @@
-class Flake {
-    constructor(x) {
-        this.sprite = new Image();
-        this.sprite.src = "./snow_flake.png";
-        this.x = x;
-        this.y = -25;
-    }
-}
+//import { MESSAGES } from "./messages.js";
+//import { flatten, createButton } from "./util.js";
+//import { gameState } from "./state.js";
+//import { Flake, fillSnow } from "./snow.js";
 
-function init() {
+(function() {
     "use strict";
-    for (var i = 0; i < 50; i++) {
-        gameState.snow[i] = new Flake(Math.floor(Math.random() * 775)); // canvas.width - 25
-    }
-    window.requestAnimationFrame(draw);
-}
-
-function draw(timeStamp) {
-    "use strict";
-    window.requestAnimationFrame(draw);
-
+    // Init
     var canvas = document.getElementById("viewport");
     var ctx = canvas.getContext("2d");
-    var timedRelease = timeStamp/1000;
+    var msCount = 0;
+    var cancelSnow = false;
+
+    // Global settings
     var fontSize = 24;
+    var fontColor = "#FFF";
     ctx.font = fontSize + "px sans-serif";
 
-    // Reset canvas
-    ctx.clearRect(0, 0, 800, 450);
+    // Snow
+    var snow = fillSnow(50);
 
-    if (!gameState.gameOver) {
-        // Initial colours
-        var lingrad = ctx.createLinearGradient(0, 0, 0, 450);
-        var dynamicStop = gameState.turns / 14;
-        lingrad.addColorStop(0, "#05A");
-        lingrad.addColorStop((gameState.turns >= 0 ? dynamicStop : 0), "#000");
-        ctx.fillStyle = lingrad;
-        ctx.fillRect(0, 0, 800, 450);
-        ctx.fillStyle = "#FFF";
+    // Buttons
+    createButton(gameState.wait, "Wait");
+    createButton(gameState.walk, "Walk", "fatigue");
+    createButton(gameState.run, "Run", "fatigue");
+    createButton(gameState.yell, "Yell", "fatigue");
+    createButton(gameState.reset, "Reset", "special");
 
+    function main() {
+        window.requestAnimationFrame(draw);
+        var timeStamp = new Date();
+        msCount = timeStamp.getMilliseconds() % 1000;
+
+        // Reset canvas
+        ctx.clearRect(0, 0, 800, 450);
+
+        switch (gameState.state) {
+            case "main":
+                var lingrad = ctx.createLinearGradient(0, 0, 0, 450);
+                var dynamicStop = gameState.turns / 14;
+                lingrad.addColorStop(0, "#05A");
+                lingrad.addColorStop((gameState.turns >= 0 ? dynamicStop : 0), "#000");
+                ctx.fillStyle = lingrad;
+                ctx.fillRect(0, 0, 800, 450);
+                break;
+            case "exposure":
+                // Increase snow amount
+                break;
+            case "wolf":
+                ctx.fillStyle = "#F00";
+                ctx.fillRect(0, 0, 800, 450);
+                break;
+            case "cabin":
+                var flicker = ((msCount / 1000 * 60) + 60);
+                var cabinLingrad = ctx.createLinearGradient(0, flicker, 0, 450);
+                cabinLingrad.addColorStop(0.4, "#930");
+                cabinLingrad.addColorStop(0.8, "#FF0");
+                cabinLingrad.addColorStop(1, "#F00");
+                ctx.fillStyle = cabinLingrad;
+                ctx.fillRect(0, 0, 800, 450);
+                cancelSnow = true;
+                break;
+            default:
+                // error
+                break;
+        }
+
+        // Text
+        ctx.fillStyle = fontColor;
         // Upper-text - resultText
         ctx.textAlign = "left";
         ctx.textBaseline = "alphabetic";
         gameState.resultText.forEach(function(line, i) {
             ctx.fillText(line, 25, (75 + fontSize * 1.5 * i));
         });
-
         // Lower-text - scenarioText
         ctx.textAlign = "right";
         ctx.textBaseline = "hanging";
@@ -53,7 +81,7 @@ function draw(timeStamp) {
         });
 
         // Snowfall
-        gameState.snow.forEach(function(flake, index) {
+        snow.forEach(function(flake, index) {
             if (index < timedRelease) {
                 flake.y += 1;
                 if (flake.y > 450) {
@@ -63,4 +91,4 @@ function draw(timeStamp) {
             }
         });
     }
-}
+}());

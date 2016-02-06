@@ -5,21 +5,17 @@
     <title>A Walk in the Woods</title>
     <link rel="stylesheet" href="stylesheet.css">
     <script src="messages.js"></script>
+    <script src="util.js"></script>
     <script src="state.js"></script>
-    <script src="main.js"></script>
+    <script src="snow.js"></script>
 </head>
-<body onload="init();">
+<body>
     <header>
         <h1>A Walk in the Woods</h1>
         <p>A short text adventure</p>
     </header>
     <canvas id="viewport" width="800" height="450"></canvas>
     <form id="action">
-        <input type="button" onclick="gameState.advance(&quot;wait&quot;);" value="Wait">
-        <input class="fatigue" type="button" onclick="gameState.advance(&quot;walk&quot;);" value="Walk">
-        <input class="fatigue" type="button" onclick="gameState.advance(&quot;run&quot;);" value="Run">
-        <input class="fatigue" type="button" onclick="gameState.advance(&quot;yell&quot;);" value="Yell">
-        <input class="special" type="button" onclick="window.location.reload(true);" value="Reset">
     </form>
     <footer>
         <p>V1.0.5</p>
@@ -27,5 +23,7 @@
             <a href="https://github.com/Chrinkus/walk">A Walk in the Woods</a>
             is maintained by <a href="https://github.com/Chrinkus">Chrinkus</a>
         </p>
+    </footer>
+    <script src="main.js"></script>
 </body>
 </html>

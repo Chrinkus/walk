@@ -1,8 +1,70 @@
+class Game {
+    constructor() {
+        this.turns = 14;
+        this.state = "main";
+        this.resultText = [];
+        this.scenarioText = MESSAGES.start;
+        this.wait = 0;
+        this.distance = 0;
+        this.weakness = 0;
+        this.win = 0;
+        this.adrenaline = false;
+        this.fatigue = false;
+        this.wind = false;
+        this.wolf = false;
+        this.cabin = false;
+    }
+
+    fatigueSwitch() {
+        this.fatigue = (this.fatigue ? false : true);
+        var buttons = document.getElementsByClassName("fatigue");
+        Array.prototype.forEach.call(buttons, function(butt) {
+            butt.disabled = (gameState.fatigue ? true : false);
+        });
+    }
+
+    wait() {
+        var text = [];
+        if (this.fatigue) { this.fatigueSwitch(); }
+        this.wait += 1;
+        if (this.wind) {
+            this.turns -= 1;
+            text.push(MESSAGES.results.wait.wind);
+        } else {
+            text.push(MESSAGES.results.wait.normal);
+        }
+        this.turns -= this.wait;
+        if (this.wait > 1) { text.push(MESSAGES.results.wait.repeat); }
+        if (this.wolf) {
+            this.weakness += 1;
+            text.push(MESSAGES.results.wait.wolf);
+        }
+        return this.advance(text);
+    }
+
+    walk() {
+        var text = [];
+        // walk results
+        return this.advance(text);
+    }
+
+    run() {
+        var text = [];
+        // run results
+        return this.advance(text);
+    }
+
+    yell() {
+        var text = [];
+        // yell results
+        return this.advance(text);
+    }
+}
+
 var gameState = {
     turns: 14,
     resultText: [""],
     scenarioText: MESSAGES.start,
-    snow: [],
     distance: 0,                    // must exceed 5 to discover cabin
     weakness: 0,                    // at 5 weakness wolf charges
     adrenaline: false,              // run w/o fatigue
@@ -12,25 +74,7 @@ var gameState = {
     wolf: false,
     cabin: false,
     win: 0,                         // must equal 3 to win
-    gameOver: false,
-
-    loader: function(arr) {
-        "use strict";
-        var newArr = [];
-
-        function flatten(arr) {
-            arr.forEach(function(entry) {
-                if (typeof entry === "string") {
-                    newArr.push(entry);
-                } else {
-                    return flatten(entry);
-                }
-            });
-        }
-        flatten(arr);
-
-        return newArr;
-    },
+    state: "main",
 
     fatigueSwitch: function() {
         "use strict";

@@ -24,7 +24,7 @@ function createButton(f, val, cls) {
 	button.type = "button";
 	button.value = val;
 	button.onclick = f;
-	document.body.appendChild(button);
+	document.getElementById("action").appendChild(button);
 }
 
 // export statement for ES6(7?) modules
