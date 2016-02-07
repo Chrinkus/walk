@@ -1,10 +1,8 @@
-class Flake {
-    constructor(x) {
-        this.sprite = new Image();
-        this.sprite.src = "./snow_flake.png";
-        this.x = x;
-        this.y = -25;
-    }
+function Flake(x) {
+    this.sprite = new Image();
+    this.sprite.src = "./snow_flake.png";
+    this.x = x;
+    this.y = -25;
 }
 
 function fillSnow(density) {

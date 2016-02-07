@@ -1,26 +1,26 @@
 // Utility functions for A Walk in the Woods
 
 // Smoothing irregular text arrays
-function flatten(arr) {
+function flatten(lumpyArr) {
 	"use strict";
 	var flatArr = [];
 	function process(arr) {
 		arr.forEach(function(entry) {
 			if (typeof entry === "string") {
-				newArr.push(entry);
+				flatArr.push(entry);
 			} else {
 				return process(entry);
 			}
 		});
 	}
-	flatten(arr);
-	return newArr;
+	process(lumpyArr);
+	return flatArr;
 }
 
 // Button factory - val = button text, cls = class
 function createButton(f, val, cls) {
 	var button = document.createElement("input");
-	if (cls) { button.class = cls; }
+	if (cls) { button.className = cls; }
 	button.type = "button";
 	button.value = val;
 	button.onclick = f;

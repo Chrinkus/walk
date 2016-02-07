@@ -1,6 +1,6 @@
 //import { MESSAGES } from "./messages.js";
 //import { flatten, createButton } from "./util.js";
-//import { gameState } from "./state.js";
+//import { Game } from "./state.js";
 //import { Flake, fillSnow } from "./snow.js";
 
 (function() {
@@ -8,7 +8,9 @@
     // Init
     var canvas = document.getElementById("viewport");
     var ctx = canvas.getContext("2d");
+    var gameState = new Game();
     var msCount = 0;
+    var seconds = 0;
     var cancelSnow = false;
 
     // Global settings
@@ -20,16 +22,17 @@
     var snow = fillSnow(50);
 
     // Buttons
-    createButton(gameState.wait, "Wait");
-    createButton(gameState.walk, "Walk", "fatigue");
-    createButton(gameState.run, "Run", "fatigue");
-    createButton(gameState.yell, "Yell", "fatigue");
-    createButton(gameState.reset, "Reset", "special");
+    createButton(function() { gameState.wait(); }, "Wait");
+    createButton(function() { gameState.walk(); }, "Walk", "fatigue");
+    createButton(function() { gameState.run(); }, "Run", "fatigue");
+    createButton(function() { gameState.yell(); }, "Yell", "fatigue");
+    createButton(function() { gameState.reset(gameState); }, "Reset", "special");
 
     function main() {
-        window.requestAnimationFrame(draw);
+        window.requestAnimationFrame(main);
         var timeStamp = new Date();
         msCount = timeStamp.getMilliseconds() % 1000;
+        seconds = timeStamp.getSeconds();
 
         // Reset canvas
         ctx.clearRect(0, 0, 800, 450);
@@ -45,6 +48,8 @@
                 break;
             case "exposure":
                 // Increase snow amount
+                ctx.fillStyle = "#000";
+                ctx.fillRect(0, 0, 800, 450);
                 break;
             case "wolf":
                 ctx.fillStyle = "#F00";
@@ -81,14 +86,17 @@
         });
 
         // Snowfall
-        snow.forEach(function(flake, index) {
-            if (index < timedRelease) {
-                flake.y += 1;
-                if (flake.y > 450) {
-                    flake.y = -25;
+        if (!cancelSnow) {
+            snow.forEach(function(flake, index) {
+                if (index < seconds) {
+                    flake.y += 1;
+                    if (flake.y > 450) {
+                        flake.y = -25;
+                    }
+                    ctx.drawImage(flake.sprite, flake.x, flake.y);
                 }
-                ctx.drawImage(flake.sprite, flake.x, flake.y);
-            }
-        });
+            });
+        }
     }
+    main();
 }());

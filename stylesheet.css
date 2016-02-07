@@ -25,6 +25,7 @@ input:disabled {
     background-color: #BBB;
 }
 .special {
+    display: none;
     width: 615px;
     margin-top: 5px;
 }
