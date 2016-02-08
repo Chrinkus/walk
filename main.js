@@ -34,8 +34,8 @@
     function main(hRTime) {
         window.requestAnimationFrame(main);
         var snowLength = snow.length;
+        hRSeconds = Math.floor(hRTime / 1000);
         if (counter < snowLength - 1) {
-            hRSeconds = Math.floor(hRTime / 1000);
             diff = hRSeconds - ref;
             if (diff <= 1) { counter += diff; }
             ref = hRSeconds;
@@ -98,9 +98,13 @@
             snow.forEach(function(flake, index) {
                 if (index < counter) {
                     flake.y += 1;
-                    if (flake.y > 450) {
-                        flake.y = -25;
+                    if (gameState.wind && (hRSeconds % 2 === 0)) {
+                        flake.x += 3;
+                    } else if ((index + counter) % 3 === 0) {
+                        flake.x += 0.2;
                     }
+                    if (flake.y > 450) { flake.y = -25; }
+                    if (flake.x > 800) { flake.x = -25; }
                     ctx.drawImage(flake.sprite, flake.x, flake.y);
                 }
             });
