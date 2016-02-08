@@ -110,11 +110,6 @@ Game.prototype.yell = function() {
     this.advance(text);
 }
 
-Game.prototype.reset = function(instance) {
-    // reset the current gameState
-    instance = new Game();
-}
-
 Game.prototype.advance = function(text) {
     var roll = Math.floor(Math.random() * 10);
     this.resultText = text;
@@ -164,6 +159,6 @@ Game.prototype.advance = function(text) {
     } else {
         this.scenarioText.push(MESSAGES.scenarios.cabin[this.win]);
     }
-    flatten(this.resultText);
-    flatten(this.scenarioText);
+    this.resultText = flatten(this.resultText);
+    this.scenarioText = flatten(this.scenarioText);
 }

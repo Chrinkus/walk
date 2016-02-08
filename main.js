@@ -10,7 +10,10 @@
     var ctx = canvas.getContext("2d");
     var gameState = new Game();
     var msCount = 0;
-    var seconds = 0;
+    var hRSeconds = 0;
+    var diff = 0;
+    var ref = 0;
+    var counter = 0;
     var cancelSnow = false;
 
     // Global settings
@@ -26,13 +29,19 @@
     createButton(function() { gameState.walk(); }, "Walk", "fatigue");
     createButton(function() { gameState.run(); }, "Run", "fatigue");
     createButton(function() { gameState.yell(); }, "Yell", "fatigue");
-    createButton(function() { gameState.reset(gameState); }, "Reset", "special");
+    createButton(function() { window.location.reload(true); }, "Reset", "special");
 
-    function main() {
+    function main(hRTime) {
         window.requestAnimationFrame(main);
+        var snowLength = snow.length;
+        if (counter < snowLength - 1) {
+            hRSeconds = Math.floor(hRTime / 1000);
+            diff = hRSeconds - ref;
+            if (diff <= 1) { counter += diff; }
+            ref = hRSeconds;
+        }
         var timeStamp = new Date();
         msCount = timeStamp.getMilliseconds() % 1000;
-        seconds = timeStamp.getSeconds();
 
         // Reset canvas
         ctx.clearRect(0, 0, 800, 450);
@@ -47,18 +56,17 @@
                 ctx.fillRect(0, 0, 800, 450);
                 break;
             case "exposure":
-                // Increase snow amount
                 ctx.fillStyle = "#000";
                 ctx.fillRect(0, 0, 800, 450);
                 break;
             case "wolf":
-                ctx.fillStyle = "#F00";
+                ctx.fillStyle = "#900";
                 ctx.fillRect(0, 0, 800, 450);
                 break;
             case "cabin":
                 var flicker = ((msCount / 1000 * 60) + 60);
                 var cabinLingrad = ctx.createLinearGradient(0, flicker, 0, 450);
-                cabinLingrad.addColorStop(0.4, "#930");
+                cabinLingrad.addColorStop(0.4, "#963");
                 cabinLingrad.addColorStop(0.8, "#FF0");
                 cabinLingrad.addColorStop(1, "#F00");
                 ctx.fillStyle = cabinLingrad;
@@ -88,7 +96,7 @@
         // Snowfall
         if (!cancelSnow) {
             snow.forEach(function(flake, index) {
-                if (index < seconds) {
+                if (index < counter) {
                     flake.y += 1;
                     if (flake.y > 450) {
                         flake.y = -25;

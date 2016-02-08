@@ -77,8 +77,8 @@ var MESSAGES = {
                 "For a moment the predator's footfalls cease,",
                 "As you turn to look, the weight of the beast lands fully upon you.",
                 "As its jaw burrows through your coat towards your neck you smile,",
-                "for this animal that will end your life has given you one last gift:",
-                "Warmth, and then Death."
+                "For this animal that will end your life has given you one last gift:",
+                "Warmth, and then death."
             ]
         }
     }

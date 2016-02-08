@@ -11,6 +11,7 @@ input {
     border-radius: 10px;
     border: 2px solid #041E4C;
     /*background-color: #4365A3;*/
+    /*display: inline;*/
     background-color: #48C;
     height: 50px;
     width: 150px;
@@ -25,8 +26,7 @@ input:disabled {
     background-color: #BBB;
 }
 .special {
-    display: none;
-    width: 615px;
+    width: 600px;
     margin-top: 5px;
 }
 footer {
