@@ -24,6 +24,13 @@ Game.prototype.fatigueSwitch = function() {
     });
 }
 
+Game.prototype.disableAll = function() {
+    var buttons = document.getElementsByTagName("input");
+    Array.prototype.forEach.call(buttons, function(butt) {
+        if (butt.className != "special") { butt.disabled = true; }
+    });
+}
+
 Game.prototype.wait = function() {
     var text = [];
     if (this.fatigue) { this.fatigueSwitch(); }
@@ -120,14 +127,17 @@ Game.prototype.advance = function(text) {
     if (this.win > 2) {
         this.resultText = MESSAGES.results.end.win;
         this.state = "cabin";
+        this.disableAll();
         return;
     } else if (this.weakness > 7) {
         this.resultText = MESSAGES.results.end.wolf;
         this.state = "wolf";
+        this.disableAll();
         return;
     } else if (this.turns < 1) {
         this.resultText = MESSAGES.results.end.dead;
         this.state = "exposure";
+        this.disableAll();
         return;
     }
 
