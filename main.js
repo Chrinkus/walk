@@ -1,8 +1,3 @@
-//import { MESSAGES } from "./messages.js";
-//import { flatten, createButton } from "./util.js";
-//import { Game } from "./state.js";
-//import { Flake, fillSnow } from "./snow.js";
-
 (function() {
     "use strict";
     // Init
@@ -29,7 +24,6 @@
     createButton(function() { gameState.walk(); }, "Walk", "fatigue");
     createButton(function() { gameState.run(); }, "Run", "fatigue");
     createButton(function() { gameState.yell(); }, "Yell", "fatigue");
-    //createButton(function() { window.location.reload(true); }, "Reset", "special");
 
     function main(hRTime) {
         window.requestAnimationFrame(main);
@@ -43,7 +37,6 @@
         var timeStamp = new Date();
         msCount = timeStamp.getMilliseconds() % 1000;
 
-        // Reset canvas
         ctx.clearRect(0, 0, 800, 450);
 
         switch (gameState.state) {

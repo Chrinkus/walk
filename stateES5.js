@@ -108,7 +108,7 @@ Game.prototype.yell = function() {
         }
     } else {
         if (this.wolf) {
-            this.weakness -= 1;
+            if (this.weakness > 0) { this.weakness -= 1; }
             text.push(MESSAGES.results.yell.wolf);
         } else {
             text.push(MESSAGES.results.yell.normal);
@@ -118,7 +118,9 @@ Game.prototype.yell = function() {
 }
 
 Game.prototype.advance = function(text) {
-    var roll = Math.floor(Math.random() * 10);
+    function roll(max) {
+        return Math.floor(Math.random() * max);
+    }
     this.resultText = text;
     this.scenarioText = [];
     if (this.wind) { this.wind = false; }
@@ -143,7 +145,7 @@ Game.prototype.advance = function(text) {
 
     // Scenarios
     if (!this.wolf) {
-        this.wolf = roll < (this.distance * 0.5) ? true : false;
+        this.wolf = (roll(10) < (this.distance * 0.5)) ? true : false;
     }
     if (this.wolf) {
         if (this.weakness > 3) {
@@ -152,15 +154,13 @@ Game.prototype.advance = function(text) {
         this.scenarioText.push(MESSAGES.scenarios.wolf[Math.ceil(this.weakness)]);
     }
 
-    // 30% chance every turn for wind to proc
-    if (roll < 3) {
-        this.wind = true;       // Turn wind on
+    if (roll(10) < 3) {
+        this.wind = true;
         this.scenarioText.push(MESSAGES.scenarios.wind);
     } else {
         this.scenarioText.push(MESSAGES.scenarios.normal);
     }
 
-    // Cabin procs at distance > 5 && turns < 5
     if (!this.cabin) {
         if ((this.distance > 4 && this.turns < 6) || this.distance > 9) {
             this.cabin = true;
