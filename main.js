@@ -29,7 +29,7 @@
     createButton(function() { gameState.walk(); }, "Walk", "fatigue");
     createButton(function() { gameState.run(); }, "Run", "fatigue");
     createButton(function() { gameState.yell(); }, "Yell", "fatigue");
-    createButton(function() { window.location.reload(true); }, "Reset", "special");
+    //createButton(function() { window.location.reload(true); }, "Reset", "special");
 
     function main(hRTime) {
         window.requestAnimationFrame(main);
