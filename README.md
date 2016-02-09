@@ -8,13 +8,14 @@ In 14 turns you will die of exposure.
 </blockquote>
 This project is a vehicle for learning the techniques and tools necessary to produce a small game.<br>
 
-**Updated to V2.0**
+**Updated to V2.0.1**
 - Unique endgame screens
 - Changing background provides feedback for # of turns remaining
 - Fatigue implemented - no more sprinting to the end
 - By popular demand: A Reset Button!
 - More snow effects for the fans!!
 - Fixed that one bug!!!
+- Other minor improvements!!!!
 
 <h4>Initial project goals are as follows:</h4>
 - Create an engine that takes input and returns output
