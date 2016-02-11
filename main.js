@@ -17,7 +17,7 @@
     ctx.font = fontSize + "px sans-serif";
 
     // Snow
-    var snow = fillSnow(50);
+    var snow = fillSnow(60);
 
     // Buttons
     createButton(function() { gameState.wait(); }, "Wait");
@@ -89,6 +89,7 @@
         // Snowfall
         if (!cancelSnow) {
             snow.forEach(function(flake, index) {
+                var s = flake.scale;
                 if (index < counter) {
                     flake.y += 1;
                     if (gameState.wind && (hRSeconds % 2 === 0)) {
@@ -96,9 +97,16 @@
                     } else if ((index + counter) % 3 === 0) {
                         flake.x += 0.2;
                     }
-                    if (flake.y > 450) { flake.y = -25; }
-                    if (flake.x > 800) { flake.x = -25; }
-                    ctx.drawImage(flake.sprite, flake.x, flake.y);
+                    if (flake.y > (450 / s)) { flake.y = -25; }
+                    if (flake.x > (800 / s)) { flake.x = -25; }
+                    if (s != 1) {
+                        ctx.save();
+                        ctx.scale(s, s);
+                        ctx.drawImage(flake.sprite, flake.x, flake.y);
+                        ctx.restore();
+                    } else {
+                        ctx.drawImage(flake.sprite, flake.x, flake.y);
+                    }
                 }
             });
         }
