@@ -92,8 +92,8 @@
                 var s = flake.scale;
                 if (index < counter) {
                     flake.y += 1;
-                    if (gameState.wind && (hRSeconds % 2 === 0)) {
-                        flake.x += 3;
+                    if (gameState.wind) {
+                        flake.x += guster(Math.floor(hRTime % 5000));
                     } else if ((index + counter) % 3 === 0) {
                         flake.x += 0.2;
                     }
