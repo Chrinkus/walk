@@ -9,7 +9,8 @@ In 14 turns you will die of exposure.
 This project is a vehicle for learning the techniques and tools necessary to produce a small game.<br>
 
 **Updated to V2.0.2**
-There was only one change but its a doozy: parallaxing snow-fall!!
+- parallaxing snow-fall!
+- organic wind!!
 
 **Updated to V2.0.1**
 - Unique endgame screens
