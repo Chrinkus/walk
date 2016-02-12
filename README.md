@@ -1,5 +1,4 @@
 <h1>A Walk in the Woods</h1>
-<h3><a href="http://chrinkus.github.io/walk">A short text adventure for the browser</a></h3>
 
 <blockquote>
 You are lost in the woods.<br>
